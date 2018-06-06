@@ -27,7 +27,7 @@ k5MorDF
 fviz_cluster(k5MorDF, data = MorDF)
 
 k6MorDF <- kmeans(MorDF, centers = 6, nstart = 25) 
-str(6MorDF)
+str(k6MorDF)
 k6MorDF
 fviz_cluster(k6MorDF, data = MorDF)
 
