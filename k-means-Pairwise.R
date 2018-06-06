@@ -13,7 +13,8 @@ str(k6MorDF)
 k6MorDF
 fviz_cluster(k6MorDF, data = MorDF)
 
-	# шаг-3 попарная корреляция кластеров по двум факторам standard pairwise scatter plots to illustrate the clusters compared to the original variables. Здесь: сравниваем углы крутизны Марианского желоба на разных тектонических плитах (он пересекает 4 плиты).
+	# шаг-3 попарная корреляция кластеров по двум факторам standard pairwise scatter plots to illustrate the clusters compared to the original variables. 
+#Здесь: сравниваем углы крутизны Марианского желоба на разных тектонических плитах (он пересекает 4 плиты).
 		# 3.1.for Mariana Plate // для Марианской плиты
 PairM <- MorDF %>%
   as_tibble() %>%
@@ -37,7 +38,7 @@ PairPc<- MorDF %>%
   ggplot(aes(x = plate_pacif, y = tg_angle, color = factor(cluster), label = profile)) +
   geom_text()
 PairPc   
-  		# 3.4.for Caroline Plate //для Тихоокеанской плиты
+  		# 3.4.for Caroline Plate //для Каролинской плиты
 PairC<- MorDF %>%
   as_tibble() %>%
   mutate(cluster = k6MorDF$cluster,
