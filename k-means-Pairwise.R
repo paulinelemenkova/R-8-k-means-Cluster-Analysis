@@ -9,7 +9,7 @@ summary(MorDF)
 # ЧАСТЬ 2: Попарная корреляция кластеров Pairwise Standard Scatter Correlation Plots
 	# шаг-2.  далем кластерный анализ с k=6 (оптимальное в данном случае)
 k6MorDF <- kmeans(MorDF, centers = 6, nstart = 25) 
-str(6MorDF)
+str(k6MorDF)
 k6MorDF
 fviz_cluster(k6MorDF, data = MorDF)
 
