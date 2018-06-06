@@ -1,28 +1,27 @@
 # libraries: 'factoextra', 'FactoMiner' ‘zip’, ‘openxlsx’, ‘carData’, ‘pbkrtest’, ‘rio’, ‘car’, ‘flashClust’, ‘leaps’, ‘scatterplot3d’, ‘FactoMineR’, ‘ca’, ‘igraph’
 
 # ЧАСТЬ 1: делаем data.frame с геоморфологией 
-	# шаг-2. загружаем таблицу, делаем датафрейм
+	# шаг-1. загружаем таблицу, делаем датафрейм
 MorDF <- read.csv("Morphology.csv", header=TRUE, sep = ",")
 head(MorDF)
 summary(MorDF)
 
-# ЧАСТЬ 2: Pairwise Standard Scatter Correlation Plots
+# ЧАСТЬ 2: Попарная корреляция кластеров Pairwise Standard Scatter Correlation Plots
 	# шаг-2.  далем кластерный анализ с k=6 (оптимальное в данном случае)
 k6MorDF <- kmeans(MorDF, centers = 6, nstart = 25) 
 str(6MorDF)
 k6MorDF
 fviz_cluster(k6MorDF, data = MorDF)
 
-
-	#  шаг-3 попарная кластеризация по двум факторам standard pairwise scatter plots to illustrate the 	clusters compared to the original variables.
-		# 3.1.for Mariana Plate // для Марианской плиты + углы желоба
+	# шаг-3 попарная корреляция кластеров по двум факторам standard pairwise scatter plots to illustrate the clusters compared to the original variables. Здесь: сравниваем углы крутизны Марианского желоба на разных тектонических плитах (он пересекает 4 плиты).
+		# 3.1.for Mariana Plate // для Марианской плиты
 PairM <- MorDF %>%
   as_tibble() %>%
   mutate(cluster = k6MorDF$cluster,
          profile = row.names(MorDF)) %>%
   ggplot(aes(x = plate_maria, y = tg_angle, color = factor(cluster), label = profile)) +
   geom_text()  
-		# 3.2.for Philippine Plate // для Филиппинской плиты + углы желоба
+		# 3.2.for Philippine Plate // для Филиппинской плиты
 PairPh <- MorDF %>%
   as_tibble() %>%
   mutate(cluster = k6MorDF$cluster,
@@ -30,7 +29,7 @@ PairPh <- MorDF %>%
   ggplot(aes(x = plate_phill, y = tg_angle, color = factor(cluster), label = profile)) +
   geom_text()
 PairPh  
-  		# 3.3.for Pacific Plate //для Тихоокеанской плиты + углы желоба
+  		# 3.3.for Pacific Plate //для Тихоокеанской плиты
 PairPc<- MorDF %>%
   as_tibble() %>%
   mutate(cluster = k6MorDF$cluster,
@@ -38,7 +37,7 @@ PairPc<- MorDF %>%
   ggplot(aes(x = plate_pacif, y = tg_angle, color = factor(cluster), label = profile)) +
   geom_text()
 PairPc   
-  		# 3.4.for Caroline Plate //для Тихоокеанской плиты + углы желоба
+  		# 3.4.for Caroline Plate //для Тихоокеанской плиты
 PairC<- MorDF %>%
   as_tibble() %>%
   mutate(cluster = k6MorDF$cluster,
@@ -81,16 +80,3 @@ PairwisePlates <- Pair_figure +
 		legend.text = element_text(colour="black", size=6, face=1),
 		legend.title = element_text(colour="black", size=6, face=1))
 PairwisePlates
- 
-
-fit <- kmeans(MorDF, 5)
-library(cluster) 
-
-fit2<- clusplot(MorDF, fit$cluster, color=TRUE, shade=TRUE, 
-   labels=2, lines=0)
-library(fpc) 
-plotcluster(MorDF, fit$cluster) 
-
-set.seed(123)
-
-
